@@ -1,12 +1,11 @@
-import { Link, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import profileDefaultImage from '../assets/images/profileIcon.png';
-import Login from './Login';
 
 function Home() {
   const navigate = useNavigate();
 
   const closeSession = () => {
-    localStorage.setItem('usuarioAutenticado', JSON.stringify('false'));
+    localStorage.clear();
     navigate('/');
   };
 

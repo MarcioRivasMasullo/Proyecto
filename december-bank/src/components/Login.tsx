@@ -1,20 +1,37 @@
 import { Input, FormControl, Button } from '@material-ui/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import logo from '../assets/images/decemberBankLogo.png';
-import Home from './Home';
 import { login as loginButtonStyle } from './LoginStyles';
+import axios from 'axios';
+import { checkLoginData } from '../network/ApiClient';
 
 function Login() {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log('Arranca');
+  }, []);
+
   const handleFormSubmit = () => {
-    // Deberia hacer el chequeo del par (email,password)
-    localStorage.setItem('usuarioAutenticado', 'true');
-    console.log(localStorage.getItem('usuarioAutenticado'));
-    navigate('/home');
+    const body = {
+      email,
+      password,
+    };
+
+    // checkLoginData(body)
+    //   .then((resp) => {
+    //     console.log(resp.request);
+    //     //localStorage.setItem('respStatus', JSON.stringify(resp.status));
+    //     //navigate('/home');
+    //   })
+    //   .catch((resp) => {
+    //     console.log('hubo un error');
+    //   });
+
+    // localStorage.setItem('usuarioAutenticado', JSON.stringify('true'));
   };
 
   return (

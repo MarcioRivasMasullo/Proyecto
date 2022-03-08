@@ -3,6 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
+
+const fallbackComponent = () => (
+  <div>
+    <h1>An error occurred. Please report this problem.</h1>
+  </div>
+);
 
 ReactDOM.render(
   <BrowserRouter>
