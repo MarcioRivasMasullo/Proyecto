@@ -1,8 +1,17 @@
+import React, { ReactChild, ReactChildren } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import profileDefaultImage from '../assets/images/profileIcon.png';
-import { loginPath } from '../routes/PathsConstants';
+import {
+  loginPath,
+  newTransactionPath,
+  transactionListPath,
+} from '../routes/PathsConstants';
 
-function Home() {
+interface AuxProps {
+  children: ReactChild | ReactChildren;
+}
+
+function Layout({ children }: AuxProps) {
   const navigate = useNavigate();
 
   const closeSession = () => {
@@ -60,7 +69,7 @@ function Home() {
           >
             <li>
               <Link
-                to="transactionList"
+                to={transactionListPath}
                 style={{
                   padding: '10px',
                   textDecoration: 'none',
@@ -74,7 +83,7 @@ function Home() {
             <br></br>
             <li>
               <Link
-                to="newTransaction"
+                to={newTransactionPath}
                 style={{
                   padding: '10px',
                   textDecoration: 'none',
@@ -88,11 +97,11 @@ function Home() {
           </ul>
         </div>
         <div style={{ flex: '220%', padding: '15px', backgroundColor: '#ddd' }}>
-          <Outlet />
+          {children}
         </div>
       </div>
     </div>
   );
 }
 
-export default Home;
+export default Layout;

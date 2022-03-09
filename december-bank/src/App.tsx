@@ -1,6 +1,6 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import Home from './components/Home';
+import Layout from './components/Layout';
 import Login from './components/Login';
 import TransactionCreation from './components/TransactionCreation';
 import TransactionList from './components/TransactionList';

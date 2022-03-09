@@ -6,6 +6,12 @@ import { login as loginButtonStyle } from './LoginStyles';
 import { checkLoginData, checkLoginResponse } from '../network/ApiClient';
 import { homePath, transactionListPath } from '../routes/PathsConstants';
 
+const storageData = (response: checkLoginResponse) => {
+  localStorage.setItem('userName', response.data.name);
+  localStorage.setItem('userRestData', JSON.stringify(response.data));
+  localStorage.setItem('userToken', response.data.token);
+};
+
 function Login() {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
@@ -22,10 +28,8 @@ function Login() {
     checkLoginData(body)
       .then((resp) => {
         const response: checkLoginResponse = resp.data;
-        localStorage.setItem('userName', response.data.name);
-        localStorage.setItem('userRestData', JSON.stringify(response.data));
-        localStorage.setItem('userToken', response.data.token);
-        navigate(homePath + '/' + transactionListPath);
+        storageData(response);
+        navigate(transactionListPath);
       })
       .catch((resp) => {
         setError(
