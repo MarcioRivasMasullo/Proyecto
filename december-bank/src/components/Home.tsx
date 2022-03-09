@@ -1,12 +1,13 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import profileDefaultImage from '../assets/images/profileIcon.png';
+import { loginPath } from '../routes/PathsConstants';
 
 function Home() {
   const navigate = useNavigate();
 
   const closeSession = () => {
     localStorage.clear();
-    navigate('/');
+    navigate(loginPath);
   };
 
   return (
@@ -40,7 +41,9 @@ function Home() {
           }}
           onClick={closeSession}
         >
-          USER NAME
+          {localStorage.getItem('userName')
+            ? localStorage.getItem('userName')
+            : 'USER NAME'}
         </h3>
       </div>
       <div style={{ display: 'flex' }}>
@@ -57,7 +60,7 @@ function Home() {
           >
             <li>
               <Link
-                to="transactionsList"
+                to="transactionList"
                 style={{
                   padding: '10px',
                   textDecoration: 'none',

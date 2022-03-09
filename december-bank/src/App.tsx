@@ -5,6 +5,7 @@ import Login from './components/Login';
 import TransactionCreation from './components/TransactionCreation';
 import TransactionList from './components/TransactionList';
 import error from './assets/images/error.png';
+import RouterDiv from './routes/Routes';
 
 const fallbackComponent = () => (
   <div
@@ -33,46 +34,9 @@ const fallbackComponent = () => (
 function App() {
   return (
     <div>
-      {/* <ErrorBoundary FallbackComponent={fallbackComponent}> */}
-      <Routes>
-        <Route index element={<Login />} />
-        {/* <Route
-            path="/home"
-            element={
-              localStorage.getItem('usuarioAutenticado') ? (
-                <Home />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          >
-            <Route index element={<TransactionList />} />
-            <Route path="transactionsList" element={<TransactionList />} />
-            <Route path="newTransaction" element={<TransactionCreation />} />
-            <Route
-              path="*"
-              element={
-                localStorage.getItem('usuarioAutenticado') ? (
-                  <Navigate to="/home" />
-                ) : (
-                  <Navigate to="/" />
-                )
-              }
-            />
-          </Route>
-          <Route path="/" element={<Login />} />
-          <Route
-            path="*"
-            element={
-              localStorage.getItem('usuarioAutenticado') ? (
-                <Navigate to="/home" />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          /> */}
-      </Routes>
-      {/* </ErrorBoundary> */}
+      <ErrorBoundary FallbackComponent={fallbackComponent}>
+        <RouterDiv />
+      </ErrorBoundary>
     </div>
   );
 }

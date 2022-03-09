@@ -1,37 +1,37 @@
-import { Input, FormControl, Button } from '@material-ui/core';
-import { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { Input, Button } from '@material-ui/core';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from '../assets/images/decemberBankLogo.png';
 import { login as loginButtonStyle } from './LoginStyles';
-import axios from 'axios';
-import { checkLoginData } from '../network/ApiClient';
+import { checkLoginData, checkLoginResponse } from '../network/ApiClient';
+import { homePath, transactionListPath } from '../routes/PathsConstants';
 
 function Login() {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [error, setError] = useState<string>();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log('Arranca');
-  }, []);
-
-  const handleFormSubmit = () => {
+  const handleFormSubmit = (e: any) => {
+    e.preventDefault();
     const body = {
       email,
       password,
     };
 
-    // checkLoginData(body)
-    //   .then((resp) => {
-    //     console.log(resp.request);
-    //     //localStorage.setItem('respStatus', JSON.stringify(resp.status));
-    //     //navigate('/home');
-    //   })
-    //   .catch((resp) => {
-    //     console.log('hubo un error');
-    //   });
-
-    // localStorage.setItem('usuarioAutenticado', JSON.stringify('true'));
+    checkLoginData(body)
+      .then((resp) => {
+        const response: checkLoginResponse = resp.data;
+        localStorage.setItem('userName', response.data.name);
+        localStorage.setItem('userRestData', JSON.stringify(response.data));
+        localStorage.setItem('userToken', response.data.token);
+        navigate(homePath + '/' + transactionListPath);
+      })
+      .catch((resp) => {
+        setError(
+          'EMAIL O CONTRASEÑA INVALIDOS. POR FAVOR, INTENTE NUEVAMENTE.'
+        );
+      });
   };
 
   return (
@@ -83,6 +83,7 @@ function Login() {
           >
             Enter
           </Button>
+          <h5 style={{ color: 'red' }}>{error}</h5>
         </form>
       </div>
     </div>

@@ -2,10 +2,9 @@ import axios from 'axios';
 
 const axiosClient = axios.create({
   baseURL: 'https://decemberbank.inhouse.decemberlabs.com/api',
-  //   headers: {
-  //     ContentType: 'application/json',
-  //   },
-  withCredentials: true,
+  // headers: {
+  //   ContentType: 'application/json',
+  // },
 });
 
 export interface checkLoginBody {
@@ -29,15 +28,6 @@ export interface checkLoginResponse {
 }
 
 export const checkLoginData = (data: object) => {
-  //   localStorage.setItem('llego', JSON.stringify('si'));
-  //   localStorage.setItem('body', JSON.stringify(data));
-  //   localStorage.setItem(
-  //     'url',
-  //     JSON.stringify(
-  //       'https://decemberbank.inhouse.decemberlabs.com/api' + '/users/login'
-  //     )
-  //   );
-
   return axiosClient.post('/users/login', data);
 };
 
