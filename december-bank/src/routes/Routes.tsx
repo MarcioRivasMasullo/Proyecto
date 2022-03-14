@@ -12,8 +12,7 @@ import {
 } from './PathsConstants';
 
 const isAuthenticated = (): boolean => {
-  const res = localStorage.getItem('userToken') !== null;
-  console.log(res);
+  const res = localStorage.getItem('userName') !== null;
   return res;
 };
 

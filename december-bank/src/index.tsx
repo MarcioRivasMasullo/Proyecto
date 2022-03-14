@@ -3,18 +3,23 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { ErrorBoundary } from 'react-error-boundary';
+import configureStore from './redux/configureStore';
+import { Provider as ReduxProvider } from 'react-redux';
 
-const fallbackComponent = () => (
-  <div>
-    <h1>An error occurred. Please report this problem.</h1>
-  </div>
-);
+const store = configureStore();
+
+// const fallbackComponent = () => (
+//   <div>
+//     <h1>An error occurred. Please report this problem.</h1>
+//   </div>
+// );
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <ReduxProvider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ReduxProvider>,
   document.getElementById('root')
 );
 
