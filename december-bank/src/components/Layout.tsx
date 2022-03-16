@@ -1,6 +1,8 @@
 import React, { ReactChild, ReactChildren } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import profileDefaultImage from '../assets/images/profileIcon.png';
+import { RootState } from '../redux/reducers';
 import {
   loginPath,
   newTransactionPath,
@@ -12,6 +14,8 @@ interface AuxProps {
 }
 
 function Layout({ children }: AuxProps) {
+  const userData = useSelector(({ authReducer }: RootState) => authReducer);
+
   const navigate = useNavigate();
 
   const closeSession = () => {
@@ -50,9 +54,7 @@ function Layout({ children }: AuxProps) {
           }}
           onClick={closeSession}
         >
-          {localStorage.getItem('userName')
-            ? localStorage.getItem('userName')
-            : 'USER NAME'}
+          {localStorage.getItem('userName') || 'USER NAME'}
         </h3>
       </div>
       <div style={{ display: 'flex' }}>
