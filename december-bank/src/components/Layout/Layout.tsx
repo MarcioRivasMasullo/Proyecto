@@ -1,13 +1,13 @@
 import React, { ReactChild, ReactChildren } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import profileDefaultImage from '../assets/images/profileIcon.png';
-import { RootState } from '../redux/reducers';
+import profileDefaultImage from '../../assets/images/profileIcon.png';
+import { RootState } from '../../redux/reducers';
 import {
   loginPath,
   newTransactionPath,
   transactionListPath,
-} from '../routes/PathsConstants';
+} from '../../routes/PathsConstants';
 
 interface AuxProps {
   children: ReactChild | ReactChildren;

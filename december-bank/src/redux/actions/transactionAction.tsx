@@ -8,5 +8,7 @@ export interface Transaction {
 }
 
 export function CreateTransaction(transaction: Transaction) {
-  return { type: 'CREATE_TRANSACTION', transaction };
+  return { type: CREATE_TRANSACTION, transaction };
 }
+
+export const CREATE_TRANSACTION = 'CREATE_TRANSACTION';

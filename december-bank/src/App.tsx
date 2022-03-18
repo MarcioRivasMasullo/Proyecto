@@ -1,9 +1,9 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import Layout from './components/Layout';
-import Login from './components/Login';
-import TransactionCreation from './components/TransactionCreation';
-import TransactionList from './components/TransactionList';
+import Layout from './components/Layout/Layout';
+import Login from './components/Login/Login';
+import TransactionCreation from './components/TransactionCreation/TransactionCreation';
+import TransactionList from './components/TransactionList/TransactionList';
 import error from './assets/images/error.png';
 import RouterDiv from './routes/Routes';
 

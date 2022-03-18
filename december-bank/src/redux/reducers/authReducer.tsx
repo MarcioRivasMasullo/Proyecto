@@ -1,3 +1,5 @@
+import { STORE_AUTH_DATA } from '../actions/authAction';
+
 export interface AuthData {
   userSessionToken: string;
   userName: string;
@@ -14,7 +16,7 @@ export default function authReducer(
   action: AuthActionType
 ): AuthData {
   switch (action.type) {
-    case 'STORE_AUTH_DATA':
+    case STORE_AUTH_DATA:
       return {
         ...state,
         userSessionToken: action.data.userSessionToken,

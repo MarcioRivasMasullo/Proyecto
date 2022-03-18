@@ -1,62 +1,87 @@
 import { Route, Navigate, Routes } from 'react-router-dom';
-import Layout from '../components/Layout';
-import Login from '../components/Login';
-import TransactionCreation from '../components/TransactionCreation';
-import TransactionList from '../components/TransactionList';
+import Layout from '../components/Layout/Layout';
+import Login from '../components/Login/Login';
+import TransactionConfirmation from '../components/TransactionCreation/TransactionConfirmation';
+import TransactionCreation from '../components/TransactionCreation/TransactionCreation';
+import TransactionList from '../components/TransactionList/TransactionList';
 import {
-  homePath,
   loginPath,
   newTransactionPath,
   notFoundPath,
   transactionListPath,
+  voucherPath,
 } from './PathsConstants';
 
-const isAuthenticated = (): boolean => {
-  const res = localStorage.getItem('userName') !== null;
+export const isAuthenticated = (): boolean => {
+  const res = localStorage.getItem('userToken') !== null;
   return res;
 };
+
+const TransactionListElement = () => {
+  console.log(isAuthenticated);
+  return isAuthenticated() ? (
+    <Layout>
+      <TransactionList />
+    </Layout>
+  ) : (
+    <Login />
+  );
+};
+
+const NotFoundNavigation = () =>
+  isAuthenticated() ? (
+    <Navigate to={transactionListPath} />
+  ) : (
+    <Navigate to={loginPath} />
+  );
+
+const TransactionCreationElement = () => {
+  console.log(isAuthenticated);
+  return isAuthenticated() ? (
+    <Layout>
+      <TransactionCreation />
+    </Layout>
+  ) : (
+    <Login />
+  );
+};
+
+const TransactionVoucherElement = () =>
+  isAuthenticated() ? (
+    <Layout>
+      <TransactionConfirmation />
+    </Layout>
+  ) : (
+    <Login />
+  );
+
+/* aca no pude hacerlo generico. Lo que intente fue generar un componente asi:
+    pero me tiraba un error con el children.
+
+  const comp = (path:string) => (
+    <Route path={path} element={
+      isAuthenticated() ? (
+      <Layout>
+        {children}
+      </Layout>
+  ) : (
+      <Login />
+  );
+    }>
+  )*/
 
 const RouterDiv = () => {
   return (
     <Routes>
-      <Route index element={<Login />} />
-
-      <Route path={loginPath} element={<Login />} />
-
-      <Route
-        path={transactionListPath}
-        element={
-          isAuthenticated() ? (
-            <Layout>
-              <TransactionList />
-            </Layout>
-          ) : (
-            <Navigate to={loginPath} />
-          )
-        }
-      />
+      <Route index element={<TransactionListElement />} />
+      <Route path={loginPath} element={<TransactionListElement />} />
+      <Route path={transactionListPath} element={<TransactionListElement />} />
       <Route
         path={newTransactionPath}
-        element={
-          isAuthenticated() ? (
-            <Layout>
-              <TransactionCreation />
-            </Layout>
-          ) : (
-            <Navigate to={loginPath} />
-          )
-        }
+        element={<TransactionCreationElement />}
       />
-      <Route
-        path={notFoundPath}
-        element={
-          isAuthenticated() ? (
-            <Navigate to={transactionListPath} />
-          ) : (
-            <Navigate to={loginPath} />
-          )
-        }
-      />
+      <Route path={voucherPath} element={<TransactionVoucherElement />} />
+      <Route path={notFoundPath} element={<NotFoundNavigation />} />
     </Routes>
   );
 };

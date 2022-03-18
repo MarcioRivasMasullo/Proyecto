@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-const axiosClient = axios.create({
+console.log(`Bearer ${localStorage.getItem('userToken')}`);
+
+const axiosClientWithAuthorization = axios.create({
+  baseURL: 'https://decemberbank.inhouse.decemberlabs.com/api',
+  headers: { Authorization: `Bearer ${localStorage.getItem('userToken')}` },
+});
+
+const axiosClientWithoutAuthorization = axios.create({
   baseURL: 'https://decemberbank.inhouse.decemberlabs.com/api',
 });
 
@@ -56,7 +63,7 @@ export interface Currency {
   name: string;
 }
 
-export interface Datum {
+export interface AccountData {
   id: number;
   balance: number;
   owner_id: number;
@@ -67,7 +74,7 @@ export interface Datum {
 }
 
 export interface Accounts {
-  data: Datum[];
+  data: AccountData[];
 }
 
 // getArbitraje types
@@ -80,25 +87,52 @@ export interface Arbitraje {
   data: DataCurrencies;
 }
 
+// getTransactions
+export interface TransactionData {
+  id: number;
+  description: string;
+  amount: number;
+  amount_from: number;
+  amount_to: number;
+  currency_name: string;
+  createdAt: Date;
+  updatedAt: Date;
+  from_account_id: number;
+  to_account_id: number;
+}
+
+export interface Pagination {
+  hasMorePages: boolean;
+  pageSize: number;
+  currentPage: number;
+  totalRows: number;
+  totalPages: number;
+}
+
+export interface GetTransactionsType {
+  data: TransactionData[];
+  pagination: Pagination;
+}
+
 // REQUESTS FUNCTIONS
 export const checkLoginData = (data: object) => {
-  return axiosClient.post('/users/login', data);
+  return axiosClientWithoutAuthorization.post('/users/login', data);
 };
 
-export const createTransactionRequest = (
-  data: CreateTransactionBody,
-  config: object
-) => {
-  console.log(data, config);
-  return axiosClient.post('/transactions', data, config);
+export const createTransactionRequest = (data: CreateTransactionBody) => {
+  return axiosClientWithAuthorization.post('/transactions', data);
 };
 
-export const getAccounts = (config: object) => {
-  return axiosClient.get('/accounts', config);
+export const getAccounts = () => {
+  return axiosClientWithAuthorization.get('/accounts');
 };
 
-export const getArbitraje = (config: object) => {
-  return axiosClient.get('/transactions/rates', config);
+export const getArbitraje = () => {
+  return axiosClientWithAuthorization.get('/transactions/rates');
 };
 
-export default axiosClient;
+export const getTransactions = (headers: object) => {
+  return axiosClientWithAuthorization.get('/transactions', headers);
+};
+
+export default axiosClientWithAuthorization;

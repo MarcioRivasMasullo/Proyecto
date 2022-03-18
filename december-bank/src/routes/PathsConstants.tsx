@@ -8,4 +8,4 @@ export const newTransactionPath = '/newTransaction';
 
 export const notFoundPath = '*';
 
-export const transactionConfirmationPath = '/confirm';
+export const voucherPath = '/newTransaction/voucher';

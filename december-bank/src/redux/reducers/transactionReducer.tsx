@@ -1,4 +1,4 @@
-import { Transaction } from '../actions/transactionAction';
+import { CREATE_TRANSACTION, Transaction } from '../actions/transactionAction';
 
 interface ActionType {
   type: string;
@@ -16,7 +16,7 @@ export default function transactionReducer(
   action: ActionType
 ): TransactionList {
   switch (action.type) {
-    case 'CREATE_TRANSACTION':
+    case CREATE_TRANSACTION:
       return {
         ...state,
         transactions: state.transactions.concat(action.transaction),

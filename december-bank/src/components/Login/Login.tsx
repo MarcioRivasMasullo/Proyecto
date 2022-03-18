@@ -1,10 +1,10 @@
 import { Input, Button } from '@material-ui/core';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/images/decemberBankLogo.png';
-import { login as loginButtonStyle } from './LoginStyles';
-import { checkLoginData, checkLoginResponse } from '../network/ApiClient';
-import { homePath, transactionListPath } from '../routes/PathsConstants';
+import logo from '../../assets/images/decemberBankLogo.png';
+import { login as loginButtonStyle } from '../Login/LoginStyles';
+import { checkLoginData, checkLoginResponse } from '../../network/ApiClient';
+import { transactionListPath } from '../../routes/PathsConstants';
 
 const storageData = (response: checkLoginResponse) => {
   localStorage.setItem('userName', response.data.name);
