@@ -1,15 +1,16 @@
 import axios from 'axios';
 
-console.log(`Bearer ${localStorage.getItem('userToken')}`);
-
-const axiosClientWithAuthorization = axios.create({
-  baseURL: 'https://decemberbank.inhouse.decemberlabs.com/api',
-  headers: { Authorization: `Bearer ${localStorage.getItem('userToken')}` },
-});
-
-const axiosClientWithoutAuthorization = axios.create({
+const axiosClient = axios.create({
   baseURL: 'https://decemberbank.inhouse.decemberlabs.com/api',
 });
+
+export function setAuthorizationToken(token: string) {
+  if (token) {
+    axiosClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete axiosClient.defaults.headers.common['Authorization'];
+  }
+}
 
 // checkLogin types
 export interface checkLoginBody {
@@ -116,23 +117,23 @@ export interface GetTransactionsType {
 
 // REQUESTS FUNCTIONS
 export const checkLoginData = (data: object) => {
-  return axiosClientWithoutAuthorization.post('/users/login', data);
+  return axiosClient.post('/users/login', data);
 };
 
 export const createTransactionRequest = (data: CreateTransactionBody) => {
-  return axiosClientWithAuthorization.post('/transactions', data);
+  return axiosClient.post('/transactions', data);
 };
 
 export const getAccounts = () => {
-  return axiosClientWithAuthorization.get('/accounts');
+  return axiosClient.get('/accounts');
 };
 
 export const getArbitraje = () => {
-  return axiosClientWithAuthorization.get('/transactions/rates');
+  return axiosClient.get('/transactions/rates');
 };
 
 export const getTransactions = (headers: object) => {
-  return axiosClientWithAuthorization.get('/transactions', headers);
+  return axiosClient.get('/transactions', headers);
 };
 
-export default axiosClientWithAuthorization;
+export default axiosClient;

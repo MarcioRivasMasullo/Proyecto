@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button';
 import React, { ReactChild, ReactChildren } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
@@ -20,6 +21,7 @@ function Layout({ children }: AuxProps) {
 
   const closeSession = () => {
     localStorage.clear();
+    console.log(localStorage.getItem('userName'));
     navigate(loginPath);
   };
 
@@ -70,31 +72,15 @@ function Layout({ children }: AuxProps) {
             }}
           >
             <li>
-              <Link
-                to={transactionListPath}
-                style={{
-                  padding: '10px',
-                  textDecoration: 'none',
-                  color: 'black',
-                  display: 'block',
-                }}
-              >
+              <Button onClick={() => navigate(transactionListPath)}>
                 TRANSACTION LIST
-              </Link>
+              </Button>
             </li>
             <br></br>
             <li>
-              <Link
-                to={newTransactionPath}
-                style={{
-                  padding: '10px',
-                  textDecoration: 'none',
-                  color: 'black',
-                  display: 'block',
-                }}
-              >
+              <Button onClick={() => navigate(newTransactionPath)}>
                 NEW TRANSACTION
-              </Link>
+              </Button>
             </li>
           </ul>
         </div>

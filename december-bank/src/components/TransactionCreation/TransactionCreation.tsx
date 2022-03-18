@@ -8,7 +8,13 @@ import {
   getAccounts,
   getArbitraje,
 } from '../../network/ApiClient';
-import { Input, InputLabel, Select } from '@material-ui/core';
+import {
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import { notFoundPath, voucherPath } from '../../routes/PathsConstants';
 
@@ -59,7 +65,7 @@ function TransactionCreation() {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-
+    console.log('Accounts : ', accounts);
     // Filter accounts by id to get the currency of selected account
     const accountSelectedCurrency = accounts.data.filter(
       (account) => account.id === Number(originAccount)
@@ -109,46 +115,44 @@ function TransactionCreation() {
       } catch (err: any) {
         navigate(notFoundPath);
       }
+    }
 
-      console.log(
-        finalAmountToTransfer,
-        transactionValue,
-        transactionCurrency,
-        accountSelectedCurrency
-      );
+    console.log(
+      finalAmountToTransfer,
+      transactionValue,
+      transactionCurrency,
+      accountSelectedCurrency
+    );
 
-      // transaction creation
-      const data: CreateTransactionBody = {
-        description: description,
-        account_from: Number(originAccount),
-        account_to: Number(recieverAccount),
-        amount: Number(transactionValue),
-        currency_name: transactionCurrency,
-      };
+    // transaction creation
+    const data: CreateTransactionBody = {
+      description: description,
+      account_from: Number(originAccount),
+      account_to: Number(recieverAccount),
+      amount: Number(transactionValue),
+      currency_name: transactionCurrency,
+    };
 
-      try {
-        const resp = await createTransactionRequest(data);
+    try {
+      const resp = await createTransactionRequest(data);
 
-        const response: CreateTransactionRequestResponse = resp.data;
-        console.log(response.data);
+      const response: CreateTransactionRequestResponse = resp.data;
+      console.log(response.data);
 
-        navigate(voucherPath, {
-          state: {
-            fromAccountId: originAccount,
-            toAccountId: recieverAccount,
-            amount: transactionValue,
-            finalAmount: finalAmountToTransfer,
-            description: description,
-            accountCurrency: accountSelectedCurrency,
-            currencySelected: transactionCurrency,
-          },
-        });
-      } catch (error) {
-        setError('INSUFICIENT BALANCE');
-        // navigate to error page
-      }
-
-      // navigation to voucher
+      navigate(voucherPath, {
+        state: {
+          fromAccountId: originAccount,
+          toAccountId: recieverAccount,
+          amount: transactionValue,
+          finalAmount: finalAmountToTransfer,
+          description: description,
+          accountCurrency: accountSelectedCurrency,
+          currencySelected: transactionCurrency,
+        },
+      });
+    } catch (error) {
+      setError('INSUFICIENT BALANCE');
+      // navigate to error page
     }
   }
 
@@ -156,32 +160,36 @@ function TransactionCreation() {
     <div>
       <form onSubmit={handleSubmit}>
         <InputLabel>ORIGIN ACCOUNT :</InputLabel>
-        <Select
-          id="cuentaOrigen"
-          required
-          onChange={handleSelectCuentaChange}
-          defaultValue=" "
-        >
-          {accounts.data.map((account) => (
-            <option key={account.id} value={account.id}>
-              Account {account.id} (Balance {getCurrency(account.currency_id)}
-              {account.balance})
-            </option>
-          ))}
-        </Select>
+        <FormControl>
+          <Select
+            id="cuentaOrigen"
+            required
+            onChange={handleSelectCuentaChange}
+            defaultValue=" "
+          >
+            {accounts.data.map((account) => (
+              <MenuItem key={account.id} value={account.id}>
+                Account {account.id} (Balance {getCurrency(account.currency_id)}{' '}
+                {account.balance})
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <br></br>
         <br></br>
         <InputLabel>TRANSACTION CURRENCY :</InputLabel>
-        <Select
-          id="moneda"
-          required
-          onChange={handleSelectMonedaChange}
-          defaultValue=" "
-        >
-          <option value="USD">U$S (American Dolars)</option>
-          <option value="URU">$ (Uruguayan Pesos)</option>
-          <option value="EU">€ (Euros)</option>
-        </Select>
+        <FormControl>
+          <Select
+            id="moneda"
+            required
+            onChange={handleSelectMonedaChange}
+            defaultValue=" "
+          >
+            <MenuItem value="USD">U$S (American Dolars)</MenuItem>
+            <MenuItem value="URU">$ (Uruguayan Pesos)</MenuItem>
+            <MenuItem value="EU">€ (Euros)</MenuItem>
+          </Select>
+        </FormControl>
         <br></br>
         <br></br>
         <InputLabel>AMOUNT TO TRANSFER : </InputLabel>

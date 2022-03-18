@@ -3,13 +3,18 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/images/decemberBankLogo.png';
 import { login as loginButtonStyle } from '../Login/LoginStyles';
-import { checkLoginData, checkLoginResponse } from '../../network/ApiClient';
+import {
+  checkLoginData,
+  checkLoginResponse,
+  setAuthorizationToken,
+} from '../../network/ApiClient';
 import { transactionListPath } from '../../routes/PathsConstants';
 
 const storageData = (response: checkLoginResponse) => {
   localStorage.setItem('userName', response.data.name);
   localStorage.setItem('userRestData', JSON.stringify(response.data));
   localStorage.setItem('userToken', response.data.token);
+  setAuthorizationToken(response.data.token);
 };
 
 function Login() {

@@ -88,12 +88,12 @@ function TransactionList() {
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', hide: true },
-    { field: 'from_account_id', headerName: 'CUENTA ORIGEN', width: 180 },
-    { field: 'to_account_id', headerName: 'CUENTA DESTINO', width: 180 },
-    { field: 'currency_name', headerName: 'MONEDA', width: 110 },
-    { field: 'amount', headerName: 'MONTO', width: 160 },
-    { field: 'description', headerName: 'REFERENCIA', width: 180 },
-    { field: 'createdAt', headerName: 'FECHA', width: 180 },
+    { field: 'from_account_id', headerName: 'ORIGIN ACCOUNT', width: 180 },
+    { field: 'to_account_id', headerName: 'RECIEVER ACCOUNT', width: 180 },
+    { field: 'currency_name', headerName: 'CURRENCY', width: 110 },
+    { field: 'amount', headerName: 'AMOUNT', width: 160 },
+    { field: 'description', headerName: 'DESCRIPTION', width: 180 },
+    { field: 'createdAt', headerName: 'DATE', width: 180 },
   ];
 
   return (
@@ -101,7 +101,7 @@ function TransactionList() {
       <div>
         <TextField
           id="standard-basic"
-          label="CUENTA ORIGEN"
+          label="ORIGIN ACCOUNT"
           variant="standard"
           style={{ padding: '8px' }}
           onChange={DebouncedCOHandler(true)}
@@ -109,7 +109,7 @@ function TransactionList() {
 
         <TextField
           id="standard-basic"
-          label="MONEDA"
+          label="CURRENCY"
           variant="standard"
           style={{ padding: '8px' }}
           onChange={DebouncedCOHandler(false)}
